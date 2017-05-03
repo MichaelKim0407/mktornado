@@ -53,6 +53,9 @@ class UrlBindings(object):
                 return
             if not isinstance(val, dict):
                 raise ValueError(val)
+            if "status" in val:
+                status = val["status"]
+                self.set_status(status)
             if "header" in val:
                 header = val["header"]
                 for key in header:

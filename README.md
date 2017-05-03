@@ -71,7 +71,9 @@ Author: Michael Kim <jinzheng19930407@sina.com>
 
     Return a `str`, as the examples above.
 
-    Or, return a `dict` containing `header` and `data` (both optional).
+    Or, return a `dict` containing `status`, `header` and `data` (all optional).
+
+    `status` should be the response status code. (See [`RequestHandler.set_status`](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.set_status))
 
     `header` should also be a `dict`, containing all the fields you would like to set. (See [`RequestHandler.add_header`](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.add_header))
 
