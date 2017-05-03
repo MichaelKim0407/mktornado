@@ -56,7 +56,7 @@ class UrlBindings(object):
             if "header" in val:
                 header = val["header"]
                 for key in header:
-                    self.set_header(key, header[key])
+                    self.add_header(key, header[key])
             if "data" in val:
                 self.write(val["data"])
 

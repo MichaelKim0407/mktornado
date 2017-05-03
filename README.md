@@ -73,7 +73,7 @@ Author: Michael Kim <jinzheng19930407@sina.com>
 
     Or, return a `dict` containing `header` and `data` (both optional).
 
-    `header` should also be a `dict`, containing all the fields you would like to set. (See [`RequestHandler.set_header](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.set_header))
+    `header` should also be a `dict`, containing all the fields you would like to set. (See [`RequestHandler.add_header`](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.add_header))
 
     `data` should be a `str` to be written into the response body.
 
