@@ -8,6 +8,8 @@ from . import param
 
 __author__ = 'Michael Kim'
 
+__version__ = "0.1.1"
+
 __url_bindings = binding.UrlBindings()
 __params = {}
 
