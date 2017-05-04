@@ -1,3 +1,5 @@
+import os
+
 import tornado.web as _web
 
 __author__ = 'Michael Kim'
@@ -75,6 +77,16 @@ class UrlBindings(object):
             # body
             if "data" in val:
                 self.write(val["data"])
+            elif "render" in val:
+                render = val["render"]
+                if "page" not in render:
+                    raise ReturnValueError(val, "Key \"page\" not found in \"render\"")
+                page = render["page"]
+                if "args" in render:
+                    args = render["args"]
+                else:
+                    args = {}
+                self.render(page, **args)
 
         return __method
 
@@ -92,7 +104,11 @@ class UrlBindings(object):
                 post_method = methods["post"]
 
             class __NewHandler(_web.RequestHandler):
-                pass
+                def get_template_path(self):
+                    path = _web.RequestHandler.get_template_path(self)
+                    if path is not None:
+                        return path
+                    return os.getcwd()
 
             if get_method is not None:
                 __NewHandler.get = UrlBindings.__gen_method(get_method, params)
