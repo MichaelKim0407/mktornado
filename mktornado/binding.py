@@ -23,6 +23,15 @@ class HttpMethodError(Exception):
         return "Method \"{}\" not allowed".format(self.__method)
 
 
+class ReturnValueError(Exception):
+    def __init__(self, val, msg):
+        self.__val = val
+        self.__msg = msg
+
+    def __str__(self):
+        return self.__msg
+
+
 class UrlBindings(object):
     def __init__(self):
         self.__bindings = {}
@@ -52,7 +61,9 @@ class UrlBindings(object):
                 self.write(val)
                 return
             if not isinstance(val, dict):
-                raise ValueError(val)
+                raise ReturnValueError(val, "Return value is not `None`, `str` or `dict`")
+
+            # header
             if "status" in val:
                 status = val["status"]
                 self.set_status(status)
@@ -60,6 +71,8 @@ class UrlBindings(object):
                 header = val["header"]
                 for key in header:
                     self.add_header(key, header[key])
+
+            # body
             if "data" in val:
                 self.write(val["data"])
 
