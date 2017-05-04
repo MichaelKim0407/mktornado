@@ -10,94 +10,47 @@ Author: Michael Kim <jinzheng19930407@sina.com>
 
 ## Usage
 
-* Binding methods
+Please refer to [the project wiki](https://github.com/MichaelKim0407/mktornado/wiki) for a complete guide.
 
-    Declare a function and decorate it with `bind_url`:
+Hello world script:
 
-    ```
-    @mktornado.bind_url("/")
-    def hello():
-        return "Hello world!"
-    ```
+```
+import random
 
-    Specify `get` or `post`:
+from mktornado import bind_url, start, json
 
-    ```
-    @mktornado.bind_url("/test", "get")
-    def test():
-        return "Test GET"
-    ```
+__author__ = 'Michael Kim'
 
-* Taking HTTP parameters:
 
-    Simply add arguments to the function:
+@bind_url("/")
+def hello_world():
+    return "Hello world!"
 
-    ```
-    @mktornado.bind_url("/hi")
-    def hi(name):
-        return "Hi, {}!".format(name)
-    ```
 
-    Specify argument types using `pydoc`:
+@bind_url("/random", "get")
+def random_points(size=10):
+    """
+    :type size: int
+    """
+    data = []
+    for i in range(size):
+        x = random.random()
+        y = random.random()
+        data.append({
+            "x": x,
+            "y": y
+        })
+    return json(data)
 
-    ```
-    @mktornado.bind_url("/login")
-    def login(id):
-        '''
-        :type id: int
-        '''
-        logging.debug(type(id))
-        return "Logged in as user {}".format(id)
-    ```
 
-    Making a parameter optional by specifying the argument's default value:
+start(8080, debug=True)
 
-    ```
-    @mktornado.bind_url("/delete")
-    def delete(id, clear_files=False):
-        '''
-        :type id: int
-        :type clear_files: bool
-        '''
-        # TODO do stuff here
-        return "OK"
-    ```
+# try these:
+# http://localhost:8080
+# http://localhost:8080/random
+# http://localhost:8080/random?size=20
+```
 
-    Take a list of argument by specifying parameter type as `list`. Elements contained will be of type `str`. No default value should be given. (See [`RequestHandler.get_arguments`](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.get_arguments))
+## License
 
-* Return values
-
-    Return `None` to set an empty response.
-
-    Return a `str`, as the examples above.
-
-    Or, return a `dict` containing `status`, `header` and `data` (all optional).
-
-    `status` should be the response status code. (See [`RequestHandler.set_status`](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.set_status))
-
-    `header` should also be a `dict`, containing all the fields you would like to set. (See [`RequestHandler.add_header`](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.add_header))
-
-    `data` should be a `str` to be written into the response body.
-
-    Specifically, if you want to respond a `json`, use `mktornado.json`:
-
-    ```
-    @mktornado.bind_url("/api", "get")
-    def api(id):
-        '''
-        :type id: int
-        '''
-        data = {}
-        # TODO do stuff here
-        return mktornado.json(data)
-    ```
-
-* Starting the server
-
-    ```
-    mktornado.start(port, **kwargs)
-    ```
-
-    `port` is the port on which you wish to start the server.
-
-    `kwargs` are the arguments to be passed into the server application. See [Application settings](http://www.tornadoweb.org/en/stable/web.html#tornado.web.Application.settings).
+MIT
