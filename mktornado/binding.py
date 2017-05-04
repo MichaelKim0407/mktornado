@@ -66,6 +66,10 @@ class UrlBindings(object):
                 raise ReturnValueError(val, "Return value is not `None`, `str` or `dict`")
 
             # header
+            if "redirect" in val:
+                self.redirect(val["redirect"])
+                self.finish()
+                return
             if "status" in val:
                 status = val["status"]
                 self.set_status(status)
@@ -77,7 +81,9 @@ class UrlBindings(object):
             # body
             if "data" in val:
                 self.write(val["data"])
-            elif "render" in val:
+                self.finish()
+                return
+            if "render" in val:
                 render = val["render"]
                 if "page" not in render:
                     raise ReturnValueError(val, "Key \"page\" not found in \"render\"")
@@ -87,6 +93,8 @@ class UrlBindings(object):
                 else:
                     args = {}
                 self.render(page, **args)
+                self.finish()
+                return
 
         return __method
 
