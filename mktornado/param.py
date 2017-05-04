@@ -46,7 +46,7 @@ class ParamTypeCastError(Exception):
         self.__val = val
 
     def __str__(self):
-        return ""
+        return "Cannot cast parameter {!r}: value is {}".format(self.__param, self.__val)
 
 
 class Params(list):
