@@ -2,7 +2,11 @@ import re as _re
 
 import tornado.web as _web
 
+from . import types
+
 __author__ = 'Michael Kim'
+
+SPECIAL_TYPES = {"@body": types.BodyType}
 
 
 class Param(object):
@@ -14,6 +18,8 @@ class Param(object):
     def get(self, handler):
         if self.__type is list:
             return {self.__name: handler.get_arguments(self.__name)}
+        if self.__type is types.BodyType:
+            return {self.__name: handler.request.body}
 
         try:
             val = handler.get_argument(self.__name)
@@ -70,7 +76,11 @@ class Params(list):
         for i in range(argcount):
             name = func_args[i]
             if name in types:
-                t = eval(types[name])
+                t = types[name]
+                if t in SPECIAL_TYPES:
+                    t = SPECIAL_TYPES[t]
+                else:
+                    t = eval(t)
             else:
                 t = str
             self.add_param(
