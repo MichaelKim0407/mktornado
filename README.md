@@ -2,11 +2,13 @@
 
 Easy way to setup a [tornado](http://www.tornadoweb.org/en/stable/index.html) server.
 
-Author: Michael Kim <jinzheng19930407@sina.com>
+Author: [Michael Kim](http://michaelkim0407.com) <mkim0407@gmail.com>
 
 ## Installation
 
-    pip install mktornado
+```
+pip install mktornado
+```
 
 ## Usage
 
