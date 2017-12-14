@@ -1,3 +1,8 @@
+import sys
+
+print("""`mkdjango` has been merged into `mklibpy` (v0.8).
+Please uninstall this package and install `mklibpy[django]` instead.""", file=sys.stderr)
+
 import json as _json
 
 import tornado.ioloop as _ioloop

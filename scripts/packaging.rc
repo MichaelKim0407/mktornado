@@ -1,0 +1,2 @@
+version=$(cat ../VERSION)
+dist="dist/mktornado-$version.tar.gz"
